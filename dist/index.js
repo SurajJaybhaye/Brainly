@@ -154,5 +154,8 @@ app.get("/api/v1/content/youtube", userMiddleware, async (req, res) => {
         content
     });
 });
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server listening on http://localhost:${port}`);
+});
 //# sourceMappingURL=index.js.map
