@@ -1,7 +1,6 @@
 import express, { request, response } from "express";
 import jwt from "jsonwebtoken";
 import { ContentModel, LinkModel, UserModel } from "./db.js";
-import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import { random } from "./utils.js";
 import cors from "cors";
@@ -21,7 +20,7 @@ app.post("/api/v1/signin", async (req, res) => {
     if (existingUser) {
         const token = jwt.sign({
             id: existingUser._id
-        }, JWT_PASSWORD);
+        }, process.env.JWT_PASSWORD);
         res.json({
             token
         });
