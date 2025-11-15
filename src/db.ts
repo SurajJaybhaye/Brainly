@@ -1,6 +1,10 @@
 import mongoose, {model, Schema} from"mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-mongoose.connect("mongodb://127.0.0.1:27017/")
+mongoose.connect(process.env.MONGO_URL!)
+.then(() => console.log("Connected to MongoDB Atlas"))
+  .catch(err => console.log(err));
 const UserSchema = new Schema({
     username: {type: String, unique: true},
     password: String
