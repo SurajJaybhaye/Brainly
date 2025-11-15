@@ -6,6 +6,7 @@ import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import { random } from "./utils.js";
 import cors from "cors";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -148,4 +149,28 @@ app.get("/api/v1/brain/share/:sharelink", async(req,res)=>{
     })
 
 })
+app.get("/api/v1/content/twitter", userMiddleware, async (req, res) => {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+
+    const content = await ContentModel.find({ 
+        type: "twitter",
+        userId: userId
+     }).populate("userId")
+    res.json({ 
+        content
+     });
+  
+});
+app.get("/api/v1/content/youtube", userMiddleware, async (req, res) => {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+
+    const content = await ContentModel.find({ 
+        type: "youtube",
+        userId: userId
+     }).populate("userId")
+    res.json({  
+        content
+     });
+  
+});
 app.listen(3000);
